@@ -1,0 +1,24 @@
+delete_even_index xs = delete_even_index_rec xs 1
+delete_even_index_rec [] _ = []
+delete_even_index_rec (x:xs) idx | (idx `mod` 2) == 1 = x:(delete_even_index_rec xs (idx+1))
+ | otherwise = (delete_even_index_rec xs (idx+1))
+ 
+sum_odd xs = sum_odd_rec xs 1 0
+sum_odd_rec [] _ acc = acc
+sum_odd_rec (x:xs) idx acc | (idx `mod` 2) == 1 = (sum_odd_rec xs (idx+1) x+acc)
+ | otherwise = (sum_odd_rec xs (idx+1) acc)
+ 
+
+create_couple_list :: Num a => [a] -> [(a,a)]
+create_couple_list xs = create_couple_list_rec [] xs
+
+
+create_couple_list_rec :: Num a => [a] -> [a] -> [(a,a)]
+create_couple_list_rec _ [] = []
+create_couple_list_rec prec (x:xs) = (create_couple prec (x:xs)):(create_couple_list_rec (x:prec) xs)
+
+
+create_couple :: Num a => [a] -> [a] -> (a, a)
+create_couple prec (x:xs) = (first, second) where
+ first = x
+ second = foldr (\x y -> x+y) 0 prec
